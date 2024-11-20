@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from random import randint
 
 import VARIABLE
 
@@ -10,10 +9,28 @@ permissions.members = True
 bot = commands.Bot(command_prefix="-", intents=permissions)
 
 
+async def resposta(interact: discord.Integration):
+    await interact.response.send_message("Botão")
+
+
+@bot.command()
+async def jogar(ctx: commands.Context):
+    await ctx.send("Vamos Jogar **Três Dragões!**")
+
+
 @bot.command()
 async def play(ctx: commands.Context):
-    die = randint(1, 6)
-    await ctx.send(f"Primeiro Dragão: **{die}**")
+
+    view = discord.ui.View()
+    botao = discord.ui.Button(label="Jogar 2d6",
+                              style=discord.ButtonStyle.blurple)
+    botao_two = discord.ui.Button(label="Jogar 2d6",
+                                  style=discord.ButtonStyle.red)
+    botao.callback = resposta
+
+    view.add_item(botao)
+    view.add_item(botao_two)
+    await ctx.reply("Vamos jogar Três Dragões", view=view)
 
 
 @bot.command()
