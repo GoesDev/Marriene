@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
+from random import randint
 
-from VARIABLE import BOT
+import VARIABLE
 
 permissions = discord.Intents.default()
 permissions.message_content = True
@@ -11,14 +12,13 @@ bot = commands.Bot(command_prefix="-", intents=permissions)
 
 @bot.command()
 async def play(ctx: commands.Context):
-    user = ctx.author.display_name
-    await ctx.send(f"Saudações {user}!\nVamos jogar **Três Dragões?**")
+    die = randint(1, 6)
+    await ctx.send(f"Primeiro Dragão: **{die}**")
 
 
 @bot.command()
-async def ola(ctx: commands.Context):
-    user = ctx.author.display_name
-    await ctx.send(f"Olá {user}!")
+async def m_help(ctx: commands.Context):
+    await ctx.reply(VARIABLE.ALL_COMMANDS)
 
 
-bot.run(BOT)
+bot.run(VARIABLE.BOT)
